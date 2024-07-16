@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock, Paper, Scissors</title>
+</head>
+<style>
+    body{
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        background: linear-gradient(to top, #dad4ec 0%, #dad4ec 1%, #f3e7e9 100%);
+        color: rgb(65, 12, 65);
+        height: 100vh;
+    }
+    h1, h2, h3{
+        text-align: center;
+    }
+    .container{
+        background: linear-gradient(circle, #d6c4dd 0%, #a295b8 80%); 
+        box-shadow: rgba(67, 2, 73, 0.25) 0px 54px 55px, rgba(67, 2, 73, 0.12) 0px -12px 30px, rgba(67, 2, 73, 0.12) 0px 4px 6px, rgba(67, 2, 73, 0.09) 0px -3px 5px;     
+        border-radius: 25px;
+        width: 60%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin: 0 auto;
+        margin-top: 20px;
+    }
+    .scores{
+        display: flex;
+        justify-content: center;
+    }
+    .scores p{
+        margin: 0 100px;
+        font-size: 20px;   
+        background-color: hsl(262, 27%, 74%, 0.5); 
+        padding: 10px;
+        border-radius: 10px;
+    }
+    .scores span{
+        font-weight: bold;
+    }
+    .element{
+        display: flex;
+        justify-content: center;  
+    }
+    .element img {
+        border-radius: 50%;
+        border: 1px solid rgb(220, 220, 220, 0.2);
+        width: 80px;
+        height: 100px;
+        margin: 10px 30px;
+        padding: 10px 20px;
+        cursor: pointer;
+        transition: 0.5s;
+        filter: drop-shadow(16px 16px 20px rgb(255, 0, 0)) invert(90%);
+    }
+    .element img:hover{
+        transform: scale(1.1);
+    }
+    .resultBox{
+        display: flex;
+        justify-content: center;
+        text-align: center;
+        font-size: 23px;
+    }
+    .resultBox p{
+        margin: 25px 5px;
+    }
+
+    .showElement{
+        display: flex;
+        justify-content: space-between;
+        margin: 10px 200px;
+        font-size: 25px;
+    }
+    .playerImage, .comImage{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .playerImg,
+    .comImg{
+        filter: drop-shadow(16px 16px 20px rgb(255, 0, 0)) invert(90%);
+        width: 70px;
+        height: 100px;
+    }
+    .showElement h1{
+        display: flex;
+        align-items: center;
+        font-size: 40px;
+    }
+    .showElement h3{
+        margin: 0;
+    }
+    .heartContainer{
+        display: flex;
+        justify-content: center;
+    }
+    .heart{
+        width: 35px;
+        padding: 5px;
+    }
+    .logo{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .logoImg{
+        width: 35%;
+    }
+    .popup-box{
+        width: 100%;
+        position: absolute;
+        top: 0;
+        display: flex;
+        justify-content: center;
+    }
+    .popup{
+        margin-top: 250px;
+        background: linear-gradient(to top, #dad4ec 0%, #dad4ec 1%, #f3e7e9 100%);
+        box-shadow: rgba(67, 2, 73, 0.25) 0px 54px 55px, rgba(67, 2, 73, 0.12) 0px -12px 30px, rgba(67, 2, 73, 0.12) 0px 4px 6px, rgba(67, 2, 73, 0.09) 0px -3px 5px;     
+        border-radius: 8px;
+        width: 40%;
+        padding: 10px;
+        position: absolute;
+        top: 50%;
+        display: none;
+    }
+    .popup-btn{
+        display: flex;
+        justify-content: center;
+        font-size: 20px;
+    }
+    .popup-btn button{
+        margin: 10px;
+        padding: 8px 15px;
+        border: none;
+        border-radius: 10px;
+        background-color: #7559a5;
+        color: white;
+        box-shadow: rgba(67, 2, 73, 0.25) 0px 54px 55px, rgba(67, 2, 73, 0.12) 0px -12px 30px, rgba(67, 2, 73, 0.12) 0px 4px 6px, rgba(67, 2, 73, 0.09) 0px -3px 5px;     
+        transition: 0.5s;
+        cursor: pointer;
+    }
+    .popup-btn button:hover{
+        background-color: #816ca5;
+    }
+
+</style>
+<body>
+    <div class="container">
+        <h1>Rock Paper Scissor Game</h1>
+        <div class="heartContainer">
+            <img src="./src/heart.png" alt="" class="heart" id="heart1">
+            <img src="./src/heart.png" alt="" class="heart" id="heart2">
+            <img src="./src/heart.png" alt="" class="heart" id="heart3">
+            <img src="./src/heart.png" alt="" class="heart" id="heart4">
+            <img src="./src/heart.png" alt="" class="heart" id="heart5">
+        </div>
+        <h3>Five rounds to Win !!!</h3>
+        <div class="scores">
+            <p>Player: <span class="playerScore">0</span></p>
+            <p>Computer: <span class="comScore">0</span></p>
+        </div>
+        
+        <div class="showElement">
+            <div class="playerImage">       
+                <img src="./src/question_mark.png" class="playerImg">
+            </div>
+            <div class="logo"><img src="./src/logo.png" alt="" class="logoImg"></div>
+            <div class="comImage">
+                <img src="./src/question_mark.png" class="comImg">
+            </div>
+        </div>
+
+        <h2>"Click your choice to start the game!"</h2>
+        <div class="element">
+            <img src="./src/paper.png" class="paper">
+            <img src="./src/scissor.png" class="scissor">
+            <img src="./src/rock.png" class="rock">
+        </div>
+        
+        <div class="resultBox">
+            <p>Computer choose: <strong><span class="com_choice">______</span></strong></p>
+            <p class="resultText"> </p>
+        </div>
+    </div>
+
+    <div class="popup-box">
+        <div class="popup">
+            <div class="popup-text">
+                <h1 class="win-result"></h1>
+                <h3 class="win-description"></h3>
+            </div>
+            <div class="popup-btn">
+                <p>Do you want to play again?</p>
+                <button class="yes-btn">Yes</button>
+                <button class="no-btn">No</button>
+            </div>
+        </div>
+    </div>
+</body>
+<script> 
+    let player = ["Paper", "Rock", "Scissor"]; 
+    let paper = document.querySelector(".paper");
+    paper.innerHTML = player[0];
+
+    let rock = document.querySelector(".rock");
+    rock.innerHTML = player[1];
+
+    let scissor = document.querySelector(".scissor");
+    scissor.innerHTML = player[2];
+
+    let playerImg = document.querySelector(".playerImg");
+
+    let playerScore = document.querySelector(".playerScore");
+    let comScore = document.querySelector(".comScore");
+    let player_score = 0;
+    let com_score = 0;
+
+    let comImg = ["./src/paper.png", "./src/rock.png", "./src/scissor.png"];
+    let comImgChoice = document.querySelector(".comImg");
+
+    let hearts = 5; 
+    let heartImages = document.querySelectorAll('.heart');
+
+    let result_text = document.querySelector(".resultText");
+
+    // Add Audio
+    let clickSound = new Audio("./src/click.mp3");
+    let winSound = new Audio("./src/win.mp3");
+    let loseSound = new Audio("./src/lose.mp3");
+
+    let popupBox = document.querySelector(".popup");
+    let winResult = document.querySelector(".win-result");
+    let winDescription = document.querySelector(".win-description");
+    let yesBtn = document.querySelector(".yes-btn");
+    yesBtn.addEventListener("click", restartGame);
+    let noBtn = document.querySelector(".no-btn");
+    noBtn.addEventListener("click", resumeGame);
+    
+    let gameOver = false;
+
+    function restartGame(){
+        location.reload();
+    }
+
+    function resumeGame(){
+        popupBox.style.display = "none";
+    }
+    
+    function showComImg(){
+        let randomComImg = comImg[Math.floor(Math.random() * comImg.length)];
+        // console.log(randomComImg);
+        comImgChoice.src = randomComImg;
+        let comChoice = document.querySelector(".com_choice");
+
+        if (randomComImg === comImg[0]) {
+            comChoice.innerHTML = "Paper";
+        } else if (randomComImg === comImg[1]) {
+            comChoice.innerHTML = "Rock";
+        } else if (randomComImg === comImg[2]) {
+            comChoice.innerHTML = "Scissor";
+        }
+        return randomComImg;
+    }
+
+    function updateHearts() {
+        for (let i = 0; i < heartImages.length; i++) {
+            if (i < hearts) {
+                heartImages[i].src = "./src/heart.png"; 
+            } else {
+                heartImages[i].src = "./src/empty_heart.png";
+            }
+        }
+    }
+
+    function gameRound(){
+        playerScore.innerHTML = player_score;
+        comScore.innerHTML = com_score;
+        if (player_score == 5 || com_score == 5) {
+            gameOver = true;
+            popupBox.style.display = "block";
+            if(player_score > com_score){
+                winSound.play();
+                winResult.innerHTML = "Congratulations 🎉";
+                winDescription.innerHTML = "You won the computer!!!";
+            } else{
+                loseSound.play();
+                winResult.innerHTML = "Good Luck Next Time";
+                winDescription.innerHTML = "Computer beats you!!!";
+            }     
+        } 
+    }
+
+    function checkPaperElement(){
+        clickSound.play();
+        let randomComImg = showComImg();
+        playerImg.src = "./src/paper.png";
+        if(randomComImg === comImg[0]){
+            result_text.innerHTML = "and it's Tie!";
+        } else if (randomComImg === comImg[1]) {
+            player_score++;
+            result_text.innerHTML = "and you beat the computer!";
+        } else if (randomComImg === comImg[2]) {
+            com_score++;
+            result_text.innerHTML = "and the computer wins this round!";
+            hearts--;
+            updateHearts();
+        }
+        gameRound();
+    }    
+
+    function checkRockElement() {
+        clickSound.play();
+        let randomComImg = showComImg();
+        playerImg.src = "./src/rock.png";
+        if(randomComImg === comImg[0]){
+            com_score++;
+            result_text.innerHTML = "and the computer wins this round!";
+            hearts--;
+            updateHearts();
+        } else if(randomComImg === comImg[1]){
+            result_text.innerHTML = "and it's Tie!";
+        } else if (randomComImg === comImg[2]) {
+            player_score++;
+            result_text.innerHTML = "and you beat the computer!";
+        } 
+        gameRound();
+    }
+
+    function checkScissorElement() {
+        clickSound.play();
+        let randomComImg = showComImg();
+        playerImg.src = "./src/scissor.png";
+        if(randomComImg === comImg[0]){
+            player_score++;
+            result_text.innerHTML = "and you beat the computer!";
+        } else if (randomComImg === comImg[1]) {
+            com_score++;
+            result_text.innerHTML = "and the computer wins this round!";
+            hearts--;
+            updateHearts();
+        } else if(randomComImg === comImg[2]){
+            result_text.innerHTML = "and it's Tie!";
+        }
+        gameRound();
+    }
+
+    paper.addEventListener("click", function() {
+        if (!gameOver) {
+            checkPaperElement();
+        }
+    });
+
+    rock.addEventListener("click", function() {
+        if (!gameOver) {
+            checkRockElement();
+        }
+    });
+
+    scissor.addEventListener("click", function() {
+        if (!gameOver) {
+            checkScissorElement();
+        }
+    });
+
+    
+
+</script>
+</html>
